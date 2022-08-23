@@ -16,7 +16,13 @@ docker-compose up -d
 
 This will automatically start and set up a MySQL database with the required base structure for importing mastedatabasen.dk data. If you don't already have a copy of this, you might want to use my [mastedatabasen.dk data scraper tool](https://github.com/davwheat/mastedatabasen-dk-scraper).
 
-A scraper JSON to MySQL import tool is in the works!
+## Import scraped JSON data
+
+To import scraped JSON data, copy your `sites_current_with_operator.json` file from your scraper folder into this repo, then run the `import_mastedatabasen_dump.py` script.
+
+The script will attempt to read the `mysql_root_pwd.txt` file, and connect to the DB with `root@127.0.0.1`, then process the JSON and insert all the records into the DB.
+
+It will not insert records where a site with the same `masteId`/`mast_id` already exists, in order to help performance with future data imports.
 
 ## Database structure
 
