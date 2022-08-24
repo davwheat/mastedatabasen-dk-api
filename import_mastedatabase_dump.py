@@ -114,12 +114,12 @@ def site_to_tuple(s: dict):
         if s["frequencyBand"] != None
         else None,
         operators_id_map[s["operator"]] if s["operator"] != None else None,
-        s["houseNumber"],
-        s["streetName"],
-        s["town"],
-        s["vejkode"],
-        s["kommunekode"],
-        s["postNumber"],
+        s["houseNumber"] if s["houseNumber"] != "Ukendt" else None,
+        s["streetName"] if s["streetName"] != "Ukendt" else None,
+        s["town"] if s["town"] != "Ukendt" else None,
+        s["vejkode"] if s["vejkode"] != "Ukendt" else None,
+        s["kommunekode"] if s["kommunekode"] != "Ukendt" else None,
+        s["postNumber"] if s["postNumber"] != "Ukendt" else None,
     )
 
 
