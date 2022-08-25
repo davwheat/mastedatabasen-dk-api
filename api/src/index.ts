@@ -10,7 +10,6 @@ import { setUpAllRelators } from './serializer';
 import { ErrorSerializer, JapiError } from 'ts-japi';
 import { InternalServerError } from './errors/InternalServerError';
 
-import type * as Express from 'express';
 import { ShowOperatorController } from './routes/operators/ShowOperatorController';
 import { ShowTechnologyController } from './routes/technologies/ShowTechnologyController';
 import { ListTechnologyControllder } from './routes/technologies/ListTechnologyController';
@@ -18,6 +17,8 @@ import { ShowServiceTypeController } from './routes/service-types/ShowServiceTyp
 import { ListServiceTypeControllder } from './routes/service-types/ListServiceTypeController';
 import { ShowFrequencyBandController } from './routes/frequency-bands/ShowFrequencyBandController';
 import { ListFrequencyBandControllder } from './routes/frequency-bands/ListFrequencyBandController';
+
+import type * as Express from 'express';
 
 if (!process.env.PORT) {
   logger.error("Missing environment variable 'PORT'");
