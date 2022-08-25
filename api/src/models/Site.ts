@@ -118,9 +118,6 @@ export class Site extends Model<InferAttributes<Site>, InferCreationAttributes<S
         underscored: true,
         tableName: 'sites',
         sequelize,
-        defaultScope: {
-          include: [FrequencyBand, Operator, ServiceType, Technology],
-        },
         timestamps: false,
       }
     );

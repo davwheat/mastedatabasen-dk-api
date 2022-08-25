@@ -1,11 +1,11 @@
 import { Operator } from '../../models';
 import { OperatorSerializer } from '../../serializer/OperatorSerializer';
-
-import type * as Express from 'express';
 import { InvalidParameterError } from '../../errors/InvalidParameterError';
 import { ModelNotFoundError } from '../../errors/ModelNotFoundError';
 
-export async function getOperatorById(req: Express.Request<{ id: string }>, res: Express.Response, next: Express.NextFunction) {
+import type * as Express from 'express';
+
+export async function ShowOperatorController(req: Express.Request<{ id: string }>, res: Express.Response, next: Express.NextFunction) {
   const id = parseInt(req.params.id);
 
   if (isNaN(id)) {

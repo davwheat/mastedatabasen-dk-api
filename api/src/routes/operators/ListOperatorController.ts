@@ -3,7 +3,7 @@ import { OperatorSerializer } from '../../serializer/OperatorSerializer';
 
 import type * as Express from 'express';
 
-export async function listAllOperators(req: Express.Request, res: Express.Response) {
+export async function ListOperatorController(req: Express.Request, res: Express.Response) {
   const operators = await Operator.findAll();
 
   const data = await OperatorSerializer.serialize(

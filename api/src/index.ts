@@ -5,13 +5,15 @@ import helmet from 'helmet';
 import { logger } from './logger';
 import { initModels } from './models';
 import compression from 'compression';
-import { listAllOperators } from './routes/operators/listAllOperators';
+import { ListOperatorController } from './routes/operators/ListOperatorController';
 import { setUpAllRelators } from './serializer';
 import { ErrorSerializer, JapiError } from 'ts-japi';
 import { InternalServerError } from './errors/InternalServerError';
 
 import type * as Express from 'express';
-import { getOperatorById } from './routes/operators/getOperatorById';
+import { ShowOperatorController } from './routes/operators/ShowOperatorController';
+import { ShowTechnologyController } from './routes/technologies/ShowTechnologyController';
+import { ListTechnologyControllder } from './routes/technologies/ListTechnologyController';
 
 if (!process.env.PORT) {
   logger.error("Missing environment variable 'PORT'");
@@ -43,8 +45,11 @@ app.get('/', async (req, res) => {
   res.send('Hello!');
 });
 
-app.get('/operators/:id', getOperatorById);
-app.get('/operators', listAllOperators);
+app.get('/operators/:id', ShowOperatorController);
+app.get('/operators', ListOperatorController);
+
+app.get('/technologies/:id', ShowTechnologyController);
+app.get('/technologies', ListTechnologyControllder);
 
 // Error handling
 app.use(async (err: any | JapiError, req: Express.Request, res: Express.Response, next: Express.NextFunction) => {
