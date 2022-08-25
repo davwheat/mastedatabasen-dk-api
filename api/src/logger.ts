@@ -1,9 +1,9 @@
 import winston from 'winston';
 
 const logger = winston.createLogger({
-  level: 'info',
+  level: process.env.NODE_ENV === 'development' ? 'debug' : 'info',
   format: winston.format.json(),
-  defaultMeta: { service: 'user-service' },
+  defaultMeta: {},
   transports: [
     //
     // - Write all logs with importance level of `error` or less to `error.log`
