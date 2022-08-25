@@ -14,6 +14,10 @@ import type * as Express from 'express';
 import { ShowOperatorController } from './routes/operators/ShowOperatorController';
 import { ShowTechnologyController } from './routes/technologies/ShowTechnologyController';
 import { ListTechnologyControllder } from './routes/technologies/ListTechnologyController';
+import { ShowServiceTypeController } from './routes/service-types/ShowServiceTypeController';
+import { ListServiceTypeControllder } from './routes/service-types/ListServiceTypeController';
+import { ShowFrequencyBandController } from './routes/frequency-bands/ShowFrequencyBandController';
+import { ListFrequencyBandControllder } from './routes/frequency-bands/ListFrequencyBandController';
 
 if (!process.env.PORT) {
   logger.error("Missing environment variable 'PORT'");
@@ -45,8 +49,14 @@ app.get('/', async (req, res) => {
   res.send('Hello!');
 });
 
+app.get('/frequency-bands/:id', ShowFrequencyBandController);
+app.get('/frequency-bands', ListFrequencyBandControllder);
+
 app.get('/operators/:id', ShowOperatorController);
 app.get('/operators', ListOperatorController);
+
+app.get('/service-types/:id', ShowServiceTypeController);
+app.get('/service-types', ListServiceTypeControllder);
 
 app.get('/technologies/:id', ShowTechnologyController);
 app.get('/technologies', ListTechnologyControllder);
