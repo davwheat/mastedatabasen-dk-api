@@ -13,7 +13,6 @@ import {
   Sequelize,
 } from 'sequelize';
 
-import { getConnection } from '../database/connection';
 import { Site } from './Site';
 
 export class ServiceType extends Model<InferAttributes<ServiceType>, InferCreationAttributes<ServiceType>> {
@@ -56,6 +55,11 @@ export class ServiceType extends Model<InferAttributes<ServiceType>, InferCreati
         tableName: 'service_types',
         sequelize,
         timestamps: false,
+        defaultScope: {
+          attributes: { include: [[Sequelize.fn('COUNT', Sequelize.col('Sites.technology_id')), 'siteCount']] },
+          include: [{ model: Site, attributes: [] }],
+          group: ['Technology.id'],
+        },
       }
     );
   }

@@ -13,7 +13,6 @@ import {
   Sequelize,
 } from 'sequelize';
 
-import { getConnection } from '../database/connection';
 import { Site } from './Site';
 
 export class Operator extends Model<InferAttributes<Operator>, InferCreationAttributes<Operator>> {
@@ -56,6 +55,11 @@ export class Operator extends Model<InferAttributes<Operator>, InferCreationAttr
         tableName: 'operators',
         sequelize,
         timestamps: false,
+        defaultScope: {
+          attributes: { include: [[Sequelize.fn('COUNT', Sequelize.col('Sites.technology_id')), 'siteCount']] },
+          include: [{ model: Site, attributes: [] }],
+          group: ['Technology.id'],
+        },
       }
     );
   }

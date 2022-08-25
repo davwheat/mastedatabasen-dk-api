@@ -13,7 +13,6 @@ import {
   Sequelize,
 } from 'sequelize';
 
-import { getConnection } from '../database/connection';
 import { Site } from './Site';
 
 export class Technology extends Model<InferAttributes<Technology>, InferCreationAttributes<Technology>> {
@@ -56,6 +55,11 @@ export class Technology extends Model<InferAttributes<Technology>, InferCreation
         tableName: 'technologies',
         sequelize,
         timestamps: false,
+        defaultScope: {
+          attributes: { include: [[Sequelize.fn('COUNT', Sequelize.col('Sites.technology_id')), 'siteCount']] },
+          include: [{ model: Site, attributes: [] }],
+          group: ['Technology.id'],
+        },
       }
     );
   }
