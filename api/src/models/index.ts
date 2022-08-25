@@ -5,7 +5,7 @@ import { ServiceType } from './ServiceType';
 import { Site } from './Site';
 import { Technology } from './Technology';
 
-export { Operator } from './Operator';
+export { FrequencyBand, Operator, ServiceType, Site, Technology };
 
 export async function initModels() {
   const sequelize = await getConnection();
