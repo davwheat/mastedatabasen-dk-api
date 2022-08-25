@@ -58,7 +58,7 @@ export class ServiceType extends Model<InferAttributes<ServiceType>, InferCreati
         defaultScope: {
           attributes: { include: [[Sequelize.fn('COUNT', Sequelize.col('Sites.technology_id')), 'siteCount']] },
           include: [{ model: Site, attributes: [] }],
-          group: ['Technology.id'],
+          group: ['ServiceType.id'],
         },
       }
     );

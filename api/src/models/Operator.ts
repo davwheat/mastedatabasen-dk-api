@@ -58,7 +58,7 @@ export class Operator extends Model<InferAttributes<Operator>, InferCreationAttr
         defaultScope: {
           attributes: { include: [[Sequelize.fn('COUNT', Sequelize.col('Sites.technology_id')), 'siteCount']] },
           include: [{ model: Site, attributes: [] }],
-          group: ['Technology.id'],
+          group: ['Operator.id'],
         },
       }
     );

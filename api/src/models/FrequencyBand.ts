@@ -58,7 +58,7 @@ export class FrequencyBand extends Model<InferAttributes<FrequencyBand>, InferCr
         defaultScope: {
           attributes: { include: [[Sequelize.fn('COUNT', Sequelize.col('Sites.technology_id')), 'siteCount']] },
           include: [{ model: Site, attributes: [] }],
-          group: ['Technology.id'],
+          group: ['FrequencyBand.id'],
         },
       }
     );
