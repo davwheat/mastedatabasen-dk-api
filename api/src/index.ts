@@ -23,7 +23,7 @@ import { jsonApiErrorHandler } from 'json-api-error/middlewares';
 if (!process.env.PORT) {
   logger.error('Missing environment variable "PORT"');
   process.exit(1);
-}s
+}
 
 const PORT: number = parseInt(process.env.PORT as string, 10);
 
