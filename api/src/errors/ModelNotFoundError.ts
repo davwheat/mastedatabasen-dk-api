@@ -1,11 +1,11 @@
-import { JapiError } from 'ts-japi';
+import { NotFoundError } from 'json-api-error';
 
-export class ModelNotFoundError extends JapiError {
+export class ModelNotFoundError extends NotFoundError {
   public constructor(message: string, modelName: string) {
     super({
-      status: 404,
-      code: 'ModelNotFoundError',
-      title: `No model (${modelName}) matching criteria found.`,
+      id: 'NotFoundError',
+      code: 'NotFoundError',
+      title: `Model (${modelName}) not found`,
       detail: message,
     });
   }

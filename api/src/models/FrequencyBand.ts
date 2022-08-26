@@ -19,6 +19,7 @@ export class FrequencyBand extends Model<InferAttributes<FrequencyBand>, InferCr
   declare id: CreationOptional<number>;
 
   declare frequencyBand: number;
+  declare sitesCount?: number;
 
   declare sites?: NonAttribute<Site[]>;
 
@@ -49,17 +50,15 @@ export class FrequencyBand extends Model<InferAttributes<FrequencyBand>, InferCr
           type: DataTypes.INTEGER,
           allowNull: false,
         },
+        sitesCount: {
+          type: DataTypes.VIRTUAL,
+        },
       },
       {
         underscored: true,
         tableName: 'frequency_bands',
         sequelize,
         timestamps: false,
-        defaultScope: {
-          attributes: { include: [[Sequelize.fn('COUNT', Sequelize.col('Sites.technology_id')), 'siteCount']] },
-          include: [{ model: Site, attributes: [] }],
-          group: ['FrequencyBand.id'],
-        },
       }
     );
   }

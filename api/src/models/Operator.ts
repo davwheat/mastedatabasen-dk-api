@@ -19,6 +19,7 @@ export class Operator extends Model<InferAttributes<Operator>, InferCreationAttr
   declare id: CreationOptional<number>;
 
   declare operatorName: string;
+  declare sitesCount?: number;
 
   declare sites?: NonAttribute<Site[]>;
 
@@ -49,17 +50,15 @@ export class Operator extends Model<InferAttributes<Operator>, InferCreationAttr
           type: DataTypes.STRING,
           allowNull: false,
         },
+        sitesCount: {
+          type: DataTypes.VIRTUAL,
+        },
       },
       {
         underscored: true,
         tableName: 'operators',
         sequelize,
         timestamps: false,
-        defaultScope: {
-          attributes: { include: [[Sequelize.fn('COUNT', Sequelize.col('Sites.technology_id')), 'siteCount']] },
-          include: [{ model: Site, attributes: [] }],
-          group: ['Operator.id'],
-        },
       }
     );
   }

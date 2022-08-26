@@ -19,6 +19,7 @@ export class ServiceType extends Model<InferAttributes<ServiceType>, InferCreati
   declare id: CreationOptional<number>;
 
   declare serviceName: string;
+  declare sitesCount?: number;
 
   declare sites?: NonAttribute<Site[]>;
 
@@ -49,17 +50,15 @@ export class ServiceType extends Model<InferAttributes<ServiceType>, InferCreati
           type: DataTypes.STRING,
           allowNull: false,
         },
+        sitesCount: {
+          type: DataTypes.VIRTUAL,
+        },
       },
       {
         underscored: true,
         tableName: 'service_types',
         sequelize,
         timestamps: false,
-        defaultScope: {
-          attributes: { include: [[Sequelize.fn('COUNT', Sequelize.col('Sites.technology_id')), 'siteCount']] },
-          include: [{ model: Site, attributes: [] }],
-          group: ['ServiceType.id'],
-        },
       }
     );
   }

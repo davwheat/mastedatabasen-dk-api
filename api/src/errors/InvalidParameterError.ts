@@ -1,15 +1,12 @@
-import { JapiError } from 'ts-japi';
+import { BadRequestError } from 'json-api-error';
 
-export class InvalidParameterError extends JapiError {
+export class InvalidParameterError extends BadRequestError {
   public constructor(message: string, paramName: string) {
     super({
-      status: 400,
-      code: 'InvalidParameterError',
-      title: 'Invalid parameter provided',
+      id: 'BadRequestError',
+      code: 'BadRequestError',
+      title: `Invalid parameter (${paramName})`,
       detail: message,
-      source: {
-        parameter: paramName,
-      },
     });
   }
 }

@@ -19,6 +19,7 @@ export class Technology extends Model<InferAttributes<Technology>, InferCreation
   declare id: CreationOptional<number>;
 
   declare technologyName: string;
+  declare sitesCount?: number;
 
   declare sites?: NonAttribute<Site[]>;
 
@@ -49,17 +50,15 @@ export class Technology extends Model<InferAttributes<Technology>, InferCreation
           type: DataTypes.STRING,
           allowNull: false,
         },
+        sitesCount: {
+          type: DataTypes.VIRTUAL,
+        },
       },
       {
         underscored: true,
         tableName: 'technologies',
         sequelize,
         timestamps: false,
-        defaultScope: {
-          attributes: { include: [[Sequelize.fn('COUNT', Sequelize.col('Sites.technology_id')), 'siteCount']] },
-          include: [{ model: Site, attributes: [] }],
-          group: ['Technology.id'],
-        },
       }
     );
   }

@@ -5,25 +5,25 @@ import helmet from 'helmet';
 import { logger } from './logger';
 import { initModels } from './models';
 import compression from 'compression';
-import { ListOperatorController } from './routes/operators/ListOperatorController';
-import { setUpAllRelators } from './serializer';
-import { ErrorSerializer, JapiError } from 'ts-japi';
-import { InternalServerError } from './errors/InternalServerError';
 
-import { ShowOperatorController } from './routes/operators/ShowOperatorController';
-import { ShowTechnologyController } from './routes/technologies/ShowTechnologyController';
-import { ListTechnologyControllder } from './routes/technologies/ListTechnologyController';
-import { ShowServiceTypeController } from './routes/service-types/ShowServiceTypeController';
-import { ListServiceTypeControllder } from './routes/service-types/ListServiceTypeController';
-import { ShowFrequencyBandController } from './routes/frequency-bands/ShowFrequencyBandController';
-import { ListFrequencyBandControllder } from './routes/frequency-bands/ListFrequencyBandController';
+import {
+  ListFrequencyBandController,
+  ListOperatorController,
+  ListServiceTypeController,
+  ListSiteController,
+  ListTechnologyController,
+  ShowFrequencyBandController,
+  ShowOperatorController,
+  ShowServiceTypeController,
+  ShowTechnologyController,
+} from './controllers';
 
-import type * as Express from 'express';
+import { jsonApiErrorHandler } from 'json-api-error/middlewares';
 
 if (!process.env.PORT) {
-  logger.error("Missing environment variable 'PORT'");
+  logger.error('Missing environment variable "PORT"');
   process.exit(1);
-}
+}s
 
 const PORT: number = parseInt(process.env.PORT as string, 10);
 
@@ -37,8 +37,6 @@ app.use(express.json());
 app.use(async (req, res, next) => {
   await initModels();
 
-  setUpAllRelators();
-
   next();
 });
 
@@ -50,30 +48,34 @@ app.get('/', async (req, res) => {
   res.send('Hello!');
 });
 
-app.get('/frequency-bands/:id', ShowFrequencyBandController);
-app.get('/frequency-bands', ListFrequencyBandControllder);
+app.get('/frequency-bands/:id', async (...args) => new ShowFrequencyBandController().onRequest(...args));
+app.get('/frequency-bands', async (...args) => new ListFrequencyBandController().onRequest(...args));
 
-app.get('/operators/:id', ShowOperatorController);
-app.get('/operators', ListOperatorController);
+app.get('/operators/:id', async (...args) => new ShowOperatorController().onRequest(...args));
+app.get('/operators', async (...args) => new ListOperatorController().onRequest(...args));
 
-app.get('/service-types/:id', ShowServiceTypeController);
-app.get('/service-types', ListServiceTypeControllder);
+app.get('/service-types/:id', async (...args) => new ShowServiceTypeController().onRequest(...args));
+app.get('/service-types', async (...args) => new ListServiceTypeController().onRequest(...args));
 
-app.get('/technologies/:id', ShowTechnologyController);
-app.get('/technologies', ListTechnologyControllder);
+app.get('/technologies/:id', async (...args) => new ShowTechnologyController().onRequest(...args));
+app.get('/technologies', async (...args) => new ListTechnologyController().onRequest(...args));
+
+// app.get('/sites/:id', ShowTechnologyController);
+app.get('/sites', async (...args) => new ListSiteController().onRequest(...args));
 
 // Error handling
-app.use(async (err: any | JapiError, req: Express.Request, res: Express.Response, next: Express.NextFunction) => {
-  console.log('err');
+app.use(jsonApiErrorHandler);
+// app.use(async (err: any, req: Express.Request, res: Express.Response, next: Express.NextFunction) => {
+//   console.log('err');
 
-  if (res.headersSent) {
-    return next(err);
-  }
+//   if (res.headersSent) {
+//     return next(err);
+//   }
 
-  if (!(err instanceof JapiError)) {
-    err = new InternalServerError(err.message);
-  }
+//   if (!(err instanceof JapiError)) {
+//     err = new InternalServerError(err.message);
+//   }
 
-  res.status(err.status);
-  res.send(new ErrorSerializer().serialize(err));
-});
+//   res.status(err.status);
+//   res.send(new ErrorSerializer().serialize(err));
+// });
