@@ -1,5 +1,6 @@
 import { InferAttributes, InferCreationAttributes, Model } from 'sequelize';
 import { InvalidParameterError } from '../errors/InvalidParameterError';
+import { ModelPaginator } from '../paginator/AbstractPaginator';
 import { AbstractPresentController } from './AbstractPresentController';
 
 export interface IListModelControllerPagingParams {
@@ -7,11 +8,39 @@ export interface IListModelControllerPagingParams {
   offset: number;
 }
 
-export abstract class ListModelController<M extends Model<InferAttributes<M>, InferCreationAttributes<M>>> extends AbstractPresentController<M> {
-  protected async data(): Promise<M | M[] | void> {
+export abstract class AbstractListModelController<
+  M extends Model<InferAttributes<M>, InferCreationAttributes<M>>
+> extends AbstractPresentController<M> {
+  protected readonly shouldPaginate: boolean = false;
+  protected readonly maxLimit: number = 20;
+  protected readonly paginator!: typeof this.shouldPaginate extends false ? never : ModelPaginator<M>;
+
+  protected async data(): Promise<M[] | void> {
     const models = (await this.model.findAll()) as M[];
 
     return models;
+  }
+
+  protected async preSerializeTransform(rawData: M | M[]): Promise<M | M[]> {
+    if (!Array.isArray(rawData)) return rawData;
+
+    const { limit } = this.extractPage();
+
+    return rawData.slice(0, limit);
+  }
+
+  protected async postSerializeTransform(data: any, rawData: M[]): Promise<any> {
+    if (!this.shouldPaginate) return data;
+
+    const pageParams = this.extractPage();
+
+    const paginator = new this.paginator(pageParams.limit, pageParams.offset, this.request.query);
+
+    const links = paginator.generateLinks(rawData);
+
+    data = { links, ...data };
+
+    return data;
   }
 
   protected extractPage(): IListModelControllerPagingParams {

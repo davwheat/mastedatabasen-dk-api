@@ -9,7 +9,9 @@ export interface IListModelControllerPagingParams {
   offset: number;
 }
 
-export abstract class ShowModelController<M extends Model<InferAttributes<M>, InferCreationAttributes<M>>> extends AbstractPresentController<M> {
+export abstract class AbstractShowModelController<
+  M extends Model<InferAttributes<M>, InferCreationAttributes<M>>
+> extends AbstractPresentController<M> {
   protected readonly maxLimit: number = 20;
 
   protected async data(): Promise<M | M[] | void> {

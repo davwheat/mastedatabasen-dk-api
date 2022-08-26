@@ -1,12 +1,16 @@
-import { Site } from '../../models';
-import { ListModelController } from '../ListModelController';
+import { FrequencyBand, Operator, ServiceType, Site, Technology } from '../../models';
+import { AbstractListModelController } from '../AbstractListModelController';
 
 import { InvalidParameterError } from '../../errors/InvalidParameterError';
 import { FindOptions, InferAttributes, Op } from 'sequelize';
 import { SitePresenter } from '../../presenters';
+import { SitePaginator } from '../../paginator/SitePaginator';
+import { JsonOptions } from 'yayson';
 
-export class ListSiteController extends ListModelController<Site> {
+export class ListSiteController extends AbstractListModelController<Site> {
+  protected readonly shouldPaginate: boolean = true;
   protected readonly maxLimit: number = 100;
+  protected readonly paginator = SitePaginator;
 
   protected hasMoreResults: boolean = false;
 
@@ -14,7 +18,7 @@ export class ListSiteController extends ListModelController<Site> {
     super(Site, 'sites', SitePresenter);
   }
 
-  protected async data(): Promise<void | Site | Site[]> {
+  protected async data(): Promise<void | Site[]> {
     const query = this.request.query;
 
     const filter = query?.filter ?? {};
@@ -55,11 +59,12 @@ export class ListSiteController extends ListModelController<Site> {
       where: findOptions,
       limit: page.limit + 1,
       offset: page.offset,
+      include: [FrequencyBand, Operator, ServiceType, Technology],
+      attributes: {
+        exclude: ['frequencyBandId', 'operatorId', 'serviceTypeId', 'technologyId'],
+      },
     })) as Site[];
 
-    const modelsToReturn = models.slice(0, page.limit);
-    this.hasMoreResults = models.length > page.limit;
-
-    return modelsToReturn;
+    return models;
   }
 }

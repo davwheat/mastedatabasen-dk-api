@@ -3,10 +3,4 @@ import yayson from 'yayson';
 
 const y = yayson({ adapter: 'sequelize' });
 
-export class ModelPresenter<M extends Model<InferAttributes<M>, InferCreationAttributes<M>>> extends y.Presenter {
-  static getMeta(areMoreResults: boolean = false) {
-    return {
-      moreResults: areMoreResults,
-    };
-  }
-}
+export class ModelPresenter<M extends Model<InferAttributes<M>, InferCreationAttributes<M>>> extends y.Presenter {}

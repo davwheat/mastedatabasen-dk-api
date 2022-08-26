@@ -1,9 +1,9 @@
 import { Technology } from '../../models';
-import { ShowModelController } from '../../controllers/ShowModelController';
+import { AbstractShowModelController } from '../AbstractShowModelController';
 import { TechnologyPresenter } from '../../presenters';
 import { TechnologyTransformer } from '../../transformer';
 
-export class ShowTechnologyController extends ShowModelController<Technology> {
+export class ShowTechnologyController extends AbstractShowModelController<Technology> {
   constructor() {
     super(Technology, 'technologies', TechnologyPresenter, TechnologyTransformer);
   }

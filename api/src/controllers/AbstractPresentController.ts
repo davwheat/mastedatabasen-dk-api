@@ -20,8 +20,6 @@ export abstract class AbstractPresentController<M extends Model<InferAttributes<
   protected response!: Express.Response;
   protected next!: Express.NextFunction;
 
-  protected readonly maxLimit: number = 20;
-
   public constructor(
     model: ModelStatic<M>,
     modelName: string,
@@ -42,11 +40,13 @@ export abstract class AbstractPresentController<M extends Model<InferAttributes<
     const data = await this.data();
 
     if (data) {
-      const response = await this.serialize(data);
+      const response = await this.postSerializeTransform(await this.serialize(data), data);
 
       await this.sendResponse(response);
     } else {
-      await this.serialize([]);
+      const response = await this.postSerializeTransform([], []);
+
+      await this.sendResponse(response);
     }
   }
 
@@ -66,6 +66,14 @@ export abstract class AbstractPresentController<M extends Model<InferAttributes<
     } else {
       return await this.modelSerializer.render([], options);
     }
+  }
+
+  protected async preSerializeTransform(rawData: M | M[]): Promise<M | M[]> {
+    return rawData;
+  }
+
+  protected async postSerializeTransform(data: any, rawData: M | M[]): Promise<any> {
+    return data;
   }
 
   protected async sendResponse(serializedData: Partial<any>): Promise<void> {
