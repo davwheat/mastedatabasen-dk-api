@@ -25,6 +25,11 @@ if (!process.env.PORT) {
   process.exit(1);
 }
 
+if (!process.env.API_BASE_URL) {
+  logger.error('Missing environment variable "API_BASE_URL"');
+  process.exit(1);
+}
+
 const PORT: number = parseInt(process.env.PORT as string, 10);
 
 const app = express();
