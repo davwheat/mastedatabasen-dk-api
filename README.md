@@ -31,3 +31,9 @@ It will not insert records where a site with the same `masteId`/`mast_id` alread
 ## Database structure
 
 ![](./db_structure.png)
+
+## API documentation
+
+API documentation is available at the root of any API instance.
+
+You can view documentation on my live instance at [https://dk-api.mastdatabase.co.uk](https://dk-api.mastdatabase.co.uk/).
