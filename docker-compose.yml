@@ -20,33 +20,12 @@ services:
     secrets:
       - mysql_root_pwd
 
-  # node:
-  #   build:
-  #     context: .
-  #     dockerfile: Dockerfile.api
-  #   depends_on:
-  #     - db
-  #   cap_add:
-  #     - SYS_NICE
-  #   restart: always
-  #   environment:
-  #     - DB_HOST=db
-  #     - DB_PORT=3306
-  #     - DB_DATABASE=mastedatabasen_sites
-  #     - DB_USER=mastedatabasen_user
-  #     - DB_PASSWORD=mastedatabasen
-  #     - PORT=8080
-  #   ports:
-  #     - '8080:8080'
-
-  node-dev:
+  node:
     build:
       context: .
-      dockerfile: Dockerfile.api.dev
+      dockerfile: Dockerfile.api
     depends_on:
       - db
-    cap_add:
-      - SYS_NICE
     restart: always
     env_file:
       - api.env
@@ -59,8 +38,27 @@ services:
       - PORT=8080
     ports:
       - '8080:8080'
-    volumes:
-      - ./api:/usr/src/app
+
+  # node-dev:
+  #   build:
+  #     context: .
+  #     dockerfile: Dockerfile.api.dev
+  #   depends_on:
+  #     - db
+  #   restart: always
+  #   env_file:
+  #     - api.env
+  #   environment:
+  #     - DB_HOST=db
+  #     - DB_PORT=3306
+  #     - DB_DATABASE=mastedatabasen_sites
+  #     - DB_USER=mastedatabasen_user
+  #     - DB_PASSWORD=mastedatabasen
+  #     - PORT=8080
+  #   ports:
+  #     - '8080:8080'
+  #   volumes:
+  #     - ./api:/usr/src/app
 
 volumes:
   db:
