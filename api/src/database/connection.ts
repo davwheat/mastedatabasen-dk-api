@@ -28,6 +28,7 @@ async function getConnection() {
     port: parseInt(process.env.DB_PORT || '0') || undefined,
     dialect: 'mysql',
     logging: (msg) => logger.debug(msg),
+    dialectOptions: { decimalNumbers: true },
   });
 
   await sequelize.authenticate();
