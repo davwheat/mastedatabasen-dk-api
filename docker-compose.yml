@@ -13,7 +13,7 @@ services:
       - MYSQL_USER=mastedatabasen_user
       - MYSQL_PASSWORD=mastedatabasen
     ports:
-      - '3306:3306'
+      - '3306'
     volumes:
       - db:/var/lib/mysql
       - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
