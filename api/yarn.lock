@@ -345,7 +345,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"aggregate-error@npm:^3.0.0, aggregate-error@npm:^3.0.1":
+"aggregate-error@npm:^3.0.0, aggregate-error@npm:^3.1.0":
   version: 3.1.0
   resolution: "aggregate-error@npm:3.1.0"
   dependencies:
@@ -1095,10 +1095,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"helmet@npm:*, helmet@npm:^5.1.1":
+"helmet@npm:*":
   version: 5.1.1
   resolution: "helmet@npm:5.1.1"
   checksum: b72ba26cc431804ad3b8ecdc18db95409a492cbb7a7e825efc27fc502b9433fec39fc083f2aad4fe7ed1a89a4287560b59f4435f9689eebbae6a2b61a1ec1b7d
+  languageName: node
+  linkType: hard
+
+"helmet@npm:^6.0.0":
+  version: 6.0.0
+  resolution: "helmet@npm:6.0.0"
+  checksum: 0dd89d5b77c5334e815f5d29376ca7af0ad1007136890f497be3455d9ed9734e7203e13d9931e29e4d2ced1c632c52440f16d2a02e8835fd8b8706a12052faad
   languageName: node
   linkType: hard
 
@@ -1312,14 +1319,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"json-api-error@npm:^1.1.0":
+"json-api-error@git+https://github.com/davwheat/JsonAPIErrors#build":
   version: 1.1.0
-  resolution: "json-api-error@npm:1.1.0"
+  resolution: "json-api-error@https://github.com/davwheat/JsonAPIErrors.git#commit=859bb6ef051e1e1a12fa8c1adfc563d3ceff8625"
   dependencies:
-    aggregate-error: ^3.0.1
-    ts-custom-error: ^3.1.1
-    typescript: ^3.6.3
-  checksum: 8094329013201668655ad7c02d4dd2158238490c59d15c0c0cbb7c315173c1bde36eac1e514426739f4511a8c88d55a9ff4eb5c2c303c6043fe1f7cb7d03e1c4
+    aggregate-error: ^3.1.0
+    ts-custom-error: ^3.2.0
+    typescript: ^4.8.2
+  checksum: 3258fa4e14dbd8015ff8ff3dfdd5f65a7c368843141f1c4298f81d30427301905a56a8ca1f382e5160999caef87e6f292606b1645cd8b3c98accf4f519677a2b
   languageName: node
   linkType: hard
 
@@ -1432,8 +1439,8 @@ __metadata:
     cors: ^2.8.5
     dotenv: ^16.0.1
     express: ^4.18.1
-    helmet: ^5.1.1
-    json-api-error: ^1.1.0
+    helmet: ^6.0.0
+    json-api-error: "git+https://github.com/davwheat/JsonAPIErrors#build"
     mysql2: ^2.3.3
     prettier: ^2.7.1
     qs: ^6.11.0
@@ -2335,7 +2342,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ts-custom-error@npm:^3.1.1":
+"ts-custom-error@npm:^3.2.0":
   version: 3.2.0
   resolution: "ts-custom-error@npm:3.2.0"
   checksum: b1d2016de891cecea46a70c4adbaf1e6f7c6178994f72070ee3c218cc1a9e2b12c3011defb8385f15dc03ddfafd8d88ef2c9217e23700fb6e537755f33b9c801
@@ -2429,16 +2436,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@npm:^3.6.3":
-  version: 3.9.10
-  resolution: "typescript@npm:3.9.10"
-  bin:
-    tsc: bin/tsc
-    tsserver: bin/tsserver
-  checksum: 46c842e2cd4797b88b66ef06c9c41dd21da48b95787072ccf39d5f2aa3124361bc4c966aa1c7f709fae0509614d76751455b5231b12dbb72eb97a31369e1ff92
-  languageName: node
-  linkType: hard
-
 "typescript@npm:^4.7.4":
   version: 4.7.4
   resolution: "typescript@npm:4.7.4"
@@ -2449,13 +2446,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@patch:typescript@^3.6.3#~builtin<compat/typescript>":
-  version: 3.9.10
-  resolution: "typescript@patch:typescript@npm%3A3.9.10#~builtin<compat/typescript>::version=3.9.10&hash=a1c5e5"
+"typescript@npm:^4.8.2":
+  version: 4.8.2
+  resolution: "typescript@npm:4.8.2"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
-  checksum: dc7141ab555b23a8650a6787f98845fc11692063d02b75ff49433091b3af2fe3d773650dea18389d7c21f47d620fb3b110ea363dab4ab039417a6ccbbaf96fc2
+  checksum: 7f5b81d0d558c9067f952c7af52ab7f19c2e70a916817929e4a5b256c93990bf3178eccb1ac8a850bc75df35f6781b6f4cb3370ce20d8b1ded92ed462348f628
   languageName: node
   linkType: hard
 
@@ -2466,6 +2463,16 @@ __metadata:
     tsc: bin/tsc
     tsserver: bin/tsserver
   checksum: 9096d8f6c16cb80ef3bf96fcbbd055bf1c4a43bd14f3b7be45a9fbe7ada46ec977f604d5feed3263b4f2aa7d4c7477ce5f9cd87de0d6feedec69a983f3a4f93e
+  languageName: node
+  linkType: hard
+
+"typescript@patch:typescript@^4.8.2#~builtin<compat/typescript>":
+  version: 4.8.2
+  resolution: "typescript@patch:typescript@npm%3A4.8.2#~builtin<compat/typescript>::version=4.8.2&hash=a1c5e5"
+  bin:
+    tsc: bin/tsc
+    tsserver: bin/tsserver
+  checksum: 5cb0f02f414f5405f4b0e7ee1fd7fa9177b6a8783c9017b6cad85f56ce4c4f93e0e6f2ce37e863cb597d44227cd009474c9fbd85bf7a50004e5557426cb58079
   languageName: node
   linkType: hard
 
