@@ -40,11 +40,23 @@ export abstract class AbstractPresentController<M extends Model<InferAttributes<
     const data = await this.data();
 
     if (data) {
-      const response = await this.postSerializeTransform(await this.serialize(data), data);
+      let response;
+
+      try {
+        response = await this.postSerializeTransform(await this.serialize(data), data);
+      } catch (e) {
+        return;
+      }
 
       await this.sendResponse(response);
     } else {
-      const response = await this.postSerializeTransform([], []);
+      let response;
+
+      try {
+        response = await this.postSerializeTransform([], []);
+      } catch (e) {
+        return;
+      }
 
       await this.sendResponse(response);
     }

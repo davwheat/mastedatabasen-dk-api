@@ -22,7 +22,13 @@ export class ListSiteController extends AbstractListModelController<Site> {
     const query = this.request.query;
 
     const filter = query?.filter ?? {};
-    const page = this.extractPage();
+    let page;
+
+    try {
+      page = this.extractPage();
+    } catch (e) {
+      return;
+    }
 
     const findOptions: FindOptions<InferAttributes<Site>>['where'] = {};
 
