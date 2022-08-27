@@ -30,7 +30,7 @@ export class ListSiteController extends AbstractListModelController<Site> {
       return;
     }
 
-    const findOptions: FindOptions<InferAttributes<Site>>['where'] = {};
+    const whereQuery: FindOptions<InferAttributes<Site>>['where'] = {};
 
     if (typeof filter !== 'object' || Array.isArray(filter)) {
       this.next(new InvalidParameterError("Query param 'filter' is invalid.", 'filter'));
@@ -52,17 +52,37 @@ export class ListSiteController extends AbstractListModelController<Site> {
         return;
       }
 
-      findOptions.lat = {
+      whereQuery.lat = {
         [Op.between]: [Math.min(lat1, lat2), Math.max(lat1, lat2)],
       };
 
-      findOptions.lon = {
+      whereQuery.lon = {
         [Op.between]: [Math.min(lon1, lon2), Math.max(lon1, lon2)],
       };
     }
 
+    ['frequencyBand', 'operator', 'serviceType', 'technology'].forEach((key) => {
+      const val = filter[key];
+
+      if (!val) return;
+
+      if (typeof val !== 'string') {
+        this.next(new InvalidParameterError(`Query param 'filter.${key}' is invalid.`, `filter.${key}`));
+        return;
+      }
+
+      const valId = parseInt(val);
+
+      if (isNaN(valId) || valId <= 0) {
+        this.next(new InvalidParameterError(`Query param 'filter.${key}' must be a valid integer, greater than 0.`, `filter.${key}`));
+        return;
+      }
+
+      whereQuery[`${key}Id` as keyof typeof whereQuery] = valId;
+    });
+
     const models = (await this.model.findAll({
-      where: findOptions,
+      where: whereQuery,
       limit: page.limit + 1,
       offset: page.offset,
       include: [FrequencyBand, Operator, ServiceType, Technology],
