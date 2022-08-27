@@ -20,6 +20,7 @@ import {
 import { getConnection } from './database/connection';
 
 import { jsonApiErrorHandler } from 'json-api-error/middlewares';
+import path from 'path';
 
 if (!process.env.PORT) {
   logger.error('Missing environment variable "PORT"');
@@ -68,10 +69,6 @@ app.listen(PORT, () => {
   logger.info(`Listening on port ${PORT}`);
 });
 
-app.get('/', async (req, res) => {
-  res.send('Hello!');
-});
-
 app.get('/frequency-bands/:id', async (...args) => new ShowFrequencyBandController().onRequest(...args));
 app.get('/frequency-bands', async (...args) => new ListFrequencyBandController().onRequest(...args));
 
@@ -86,6 +83,10 @@ app.get('/technologies', async (...args) => new ListTechnologyController().onReq
 
 // app.get('/sites/:id', ShowTechnologyController);
 app.get('/sites', async (...args) => new ListSiteController().onRequest(...args));
+
+app.get('/', async (req, res) => {
+  res.sendFile(path.join(__dirname, '../documentation/index.html'));
+});
 
 // Error handling
 app.use(jsonApiErrorHandler);
