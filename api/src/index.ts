@@ -17,6 +17,7 @@ import {
   ShowServiceTypeController,
   ShowTechnologyController,
 } from './controllers';
+import { getConnection } from './database/connection';
 
 import { jsonApiErrorHandler } from 'json-api-error/middlewares';
 
@@ -29,6 +30,15 @@ if (!process.env.API_BASE_URL) {
   logger.error('Missing environment variable "API_BASE_URL"');
   process.exit(1);
 }
+
+getConnection()
+  .then(() => {
+    logger.info('Database connection successful.');
+  })
+  .catch(() => {
+    logger.error('Database connection failed.');
+    process.exit(1);
+  });
 
 const PORT: number = parseInt(process.env.PORT as string, 10);
 
