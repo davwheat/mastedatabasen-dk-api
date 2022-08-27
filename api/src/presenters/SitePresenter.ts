@@ -17,3 +17,5 @@ export class SitePresenter extends ModelPresenter<Site> {
     };
   }
 }
+
+SitePresenter.prototype.type = SitePresenter.type;
