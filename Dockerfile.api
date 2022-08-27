@@ -1,0 +1,14 @@
+FROM node:18-alpine
+
+# Create app directory
+WORKDIR /usr/src/app
+
+# Copy app code
+COPY ./api/ ./
+
+RUN yarn install --frozen-lockfile
+
+# Transpile
+RUN yarn build
+
+CMD yarn run start
