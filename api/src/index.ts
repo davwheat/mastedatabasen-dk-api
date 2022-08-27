@@ -55,6 +55,15 @@ app.use(async (req, res, next) => {
   next();
 });
 
+app.use(async (req, res, next) => {
+  res.setHeader('X-Powered-By', 'davw.network');
+  res.setHeader('X-Source-Code', 'https://github.com/davwheat/mastedatabasen-dk-api');
+
+  res.setHeader('Cache-Control', 'public, max-age=120');
+
+  next();
+});
+
 app.listen(PORT, () => {
   logger.info(`Listening on port ${PORT}`);
 });
