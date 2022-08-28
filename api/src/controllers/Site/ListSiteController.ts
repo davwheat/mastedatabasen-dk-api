@@ -30,38 +30,44 @@ export class ListSiteController extends AbstractListModelController<Site> {
       return;
     }
 
-    const whereQuery: FindOptions<InferAttributes<Site>>['where'] = {};
+    const whereQuery: any[] = [];
 
     if (typeof filter !== 'object' || Array.isArray(filter)) {
       this.next(new InvalidParameterError("Query param 'filter' is invalid.", 'filter'));
       return;
     }
 
-    const { boundingBox } = filter;
+    console.log(filter);
 
-    if (boundingBox) {
-      if (typeof boundingBox !== 'string') {
-        this.next(new InvalidParameterError("Query param 'filter.boundingBox' is invalid.", 'filter.boundingBox'));
+    const { bounding_box } = filter;
+
+    if (bounding_box) {
+      if (typeof bounding_box !== 'string') {
+        this.next(new InvalidParameterError("Query param 'filter.bounding_box' is invalid.", 'filter.bounding_box'));
         return;
       }
 
-      const [lat1, lon1, lat2, lon2] = boundingBox.split(',').map((s) => parseFloat(s));
+      const [lat1, lon1, lat2, lon2] = bounding_box.split(',').map((s) => parseFloat(s));
 
       if (isNaN(lat1) || isNaN(lon1) || isNaN(lat2) || isNaN(lon2)) {
-        this.next(new InvalidParameterError("Query param 'filter.boundingBox' is invalid.", 'filter.boundingBox'));
+        this.next(new InvalidParameterError("Query param 'filter.bounding_box' is invalid.", 'filter.bounding_box'));
         return;
       }
 
-      whereQuery.lat = {
-        [Op.between]: [Math.min(lat1, lat2), Math.max(lat1, lat2)],
-      };
+      whereQuery.push({
+        lat: {
+          [Op.between]: [Math.min(lat1, lat2), Math.max(lat1, lat2)],
+        },
+      });
 
-      whereQuery.lon = {
-        [Op.between]: [Math.min(lon1, lon2), Math.max(lon1, lon2)],
-      };
+      whereQuery.push({
+        lon: {
+          [Op.between]: [Math.min(lon1, lon2), Math.max(lon1, lon2)],
+        },
+      });
     }
 
-    ['frequencyBand', 'operator', 'serviceType', 'technology'].forEach((key) => {
+    ['frequency_band', 'operator', 'service_type', 'technology'].forEach((key) => {
       const val = filter[key];
 
       if (!val) return;
@@ -78,11 +84,13 @@ export class ListSiteController extends AbstractListModelController<Site> {
         return;
       }
 
-      whereQuery[`${key}Id` as keyof typeof whereQuery] = valId;
+      const camelKey = key.replace(/(_[A-Z])/g, (match) => match[1].toUpperCase());
+
+      whereQuery.push({ [`${camelKey}Id` as keyof typeof whereQuery]: valId });
     });
 
     const models = (await this.model.findAll({
-      where: whereQuery,
+      where: { [Op.and]: whereQuery },
       limit: page.limit + 1,
       offset: page.offset,
       include: [FrequencyBand, Operator, ServiceType, Technology],

@@ -564,7 +564,7 @@
           </thead>
           <tbody>
             <tr>
-              <td><code>filter[boundingBox]</code></td>
+              <td><code>filter[bounding_box]</code></td>
               <td>The latitude and longitude (WGS:84) bounding box to search within. (<code>lat1,lon1,lat2,lon2</code>)</td>
               <td><code>56.25,12.5,56.5,12.75</code></td>
               <td>None</td>
@@ -614,7 +614,7 @@
           <h5>Filter by latitude and longitude</h5>
 
           <p>
-            <code><span class="BASE_URL"></span>/sites?filter[boundingBox]=56.25,12.5,56.5,12.75</code>
+            <code><span class="BASE_URL"></span>/sites?filter[bounding_box]=56.25,12.5,56.5,12.75</code>
           </p>
 
           <p>Lists the first 100 sites between <code>LatLng(56.25, 12.5)</code> and <code>LatLng(56.5, 12.75)</code>.</p>
@@ -624,7 +624,7 @@
           <h5>Filter by lat, lon, operator and technology</h5>
 
           <p>
-            <code><span class="BASE_URL"></span>/sites?filter[boundingBox]=56.25,12.5,56.5,12.75&filter[operator]=2&filter=[technology]=9</code>
+            <code><span class="BASE_URL"></span>/sites?filter[bounding_box]=56.25,12.5,56.5,12.75&filter[operator]=2&filter[technology]=9</code>
           </p>
 
           <p>
@@ -637,7 +637,7 @@
           <h5>Filter by technology with page size of 20</h5>
 
           <p>
-            <code><span class="BASE_URL"></span>/sites?filter=[technology]=5&page[limit]=20</code>
+            <code><span class="BASE_URL"></span>/sites?filter[technology]=5&page[limit]=20</code>
           </p>
 
           <p>Lists the first 20 sites utilizing GSM-R (technology ID #5).</p>
