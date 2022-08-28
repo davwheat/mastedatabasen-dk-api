@@ -8,7 +8,7 @@ import { SitePaginator } from '../../paginator/SitePaginator';
 
 export class ListSiteController extends AbstractListModelController<Site> {
   protected readonly shouldPaginate: boolean = true;
-  protected readonly maxLimit: number = 100;
+  protected readonly maxLimit: number = 5000;
   protected readonly paginator = SitePaginator;
 
   protected hasMoreResults: boolean = false;
