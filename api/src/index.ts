@@ -21,6 +21,7 @@ import { getConnection } from './database/connection';
 
 import { jsonApiErrorHandler } from 'json-api-error/middlewares';
 import path from 'path';
+import { ShowSiteController } from './controllers/Site/ShowSiteController';
 
 if (!process.env.PORT) {
   logger.error('Missing environment variable "PORT"');
@@ -85,7 +86,7 @@ app.get('/service-types', async (...args) => new ListServiceTypeController().onR
 app.get('/technologies/:id', async (...args) => new ShowTechnologyController().onRequest(...args));
 app.get('/technologies', async (...args) => new ListTechnologyController().onRequest(...args));
 
-// app.get('/sites/:id', ShowTechnologyController);
+app.get('/sites/:id', async (...args) => new ShowSiteController().onRequest(...args));
 app.get('/sites', async (...args) => new ListSiteController().onRequest(...args));
 
 app.get('/', async (req, res) => {
@@ -94,17 +95,3 @@ app.get('/', async (req, res) => {
 
 // Error handling
 app.use(jsonApiErrorHandler);
-// app.use(async (err: any, req: Express.Request, res: Express.Response, next: Express.NextFunction) => {
-//   console.log('err');
-
-//   if (res.headersSent) {
-//     return next(err);
-//   }
-
-//   if (!(err instanceof JapiError)) {
-//     err = new InternalServerError(err.message);
-//   }
-
-//   res.status(err.status);
-//   res.send(new ErrorSerializer().serialize(err));
-// });
