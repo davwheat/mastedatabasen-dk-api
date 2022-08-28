@@ -2,10 +2,9 @@ import { FrequencyBand, Operator, ServiceType, Site, Technology } from '../../mo
 import { AbstractListModelController } from '../AbstractListModelController';
 
 import { InvalidParameterError } from '../../errors/InvalidParameterError';
-import { FindOptions, InferAttributes, Op } from 'sequelize';
+import { Op } from 'sequelize';
 import { SitePresenter } from '../../presenters';
 import { SitePaginator } from '../../paginator/SitePaginator';
-import { JsonOptions } from 'yayson';
 
 export class ListSiteController extends AbstractListModelController<Site> {
   protected readonly shouldPaginate: boolean = true;
