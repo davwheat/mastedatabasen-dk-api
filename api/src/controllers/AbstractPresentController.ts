@@ -43,7 +43,7 @@ export abstract class AbstractPresentController<M extends Model<InferAttributes<
       let response;
 
       try {
-        response = await this.postSerializeTransform(await this.serialize(data), data);
+        response = await this.postSerializeTransform(await this.serialize(await this.preSerializeTransform(data)), data);
       } catch (e) {
         return;
       }
@@ -53,7 +53,7 @@ export abstract class AbstractPresentController<M extends Model<InferAttributes<
       let response;
 
       try {
-        response = await this.postSerializeTransform([], []);
+        response = await this.postSerializeTransform(await this.preSerializeTransform([]), []);
       } catch (e) {
         return;
       }
