@@ -36,8 +36,6 @@ export class ListSiteController extends AbstractListModelController<Site> {
       return;
     }
 
-    console.log(filter);
-
     const { bounding_box } = filter;
 
     if (bounding_box) {
