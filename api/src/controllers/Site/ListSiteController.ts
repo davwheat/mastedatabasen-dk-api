@@ -81,7 +81,7 @@ export class ListSiteController extends AbstractListModelController<Site> {
         return;
       }
 
-      const camelKey = key.replace(/(_[A-Z])/g, (match) => match[1].toUpperCase());
+      const camelKey = key.replace(/(_[A-Za-z])/g, (match) => match[1].toUpperCase());
 
       whereQuery.push({ [`${camelKey}Id` as keyof typeof whereQuery]: valId });
     });
