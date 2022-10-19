@@ -22,7 +22,7 @@ This will automatically start and set up a MySQL database with the required base
 
 > ⚠️ You will need to start the docker containers, as per the instructions in the previous section. You may also need to edit the ports configuration for the `db` container to `"3306:3306"` in order to expose this port to your local system. **It is strongly recommended to change this back afterwards for security.**
 
-To import JSON data scraped with my Mastedatabasen.dk scraper tool, copy your `sites_current_with_operator.json` file from your scraper folder into this repo, then run the `import_mastedatabasen_dump.py` script.
+To import JSON data scraped with my Mastedatabasen.dk scraper tool, copy your `sites_current_with_operator.json` file from your scraper folder into this repo, then run the `import_mastedatabasen_dump.py` script. If you haven't got the needed dependencies, you'll need to run `pip install -r requirements.txt` first.
 
 The script will attempt to read the `mysql_root_pwd.txt` file, and connect to the DB with `root@127.0.0.1`, then process the JSON and insert all the records into the DB.
 
