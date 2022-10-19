@@ -1,6 +1,7 @@
 import json
 import mysql.connector
 from datetime import datetime, timezone
+import time
 
 
 connection = None
@@ -97,7 +98,7 @@ def get_all_site_mast_ids():
 
 
 def site_to_tuple(s: dict):
-    print(f"Converting {s['masteId']} to dict...")
+    # print(f"Converting {s['masteId']} to dict...")
 
     startTimestamp = datetime.strptime(s["startDate"], "%Y-%m-%dT%H:%M:%SZ")
     startTimestamp = startTimestamp.replace(tzinfo=timezone.utc)
@@ -130,18 +131,46 @@ def import_sites():
         sites = json.loads(f.read())
 
     existingSiteIds = get_all_site_mast_ids()
+    siteIdsToRemoveSet = set(existingSiteIds)
+
+    print(f"Existing site count: {len(existingSiteIds)}")
+    print(f"     New site count: {len(sites)}")
 
     tuples = []
 
     for s in sites:
-        if s["masteId"] in existingSiteIds:
+        # Seems that the site IDs change unreliably, so we can't assume
+
+        thisId = s["masteId"]
+
+        if thisId in siteIdsToRemoveSet:
+            siteIdsToRemoveSet.discard(thisId)
             continue
 
         tuples.append(site_to_tuple(s))
 
-    mycursor = get_cursor()
+    print(
+        f"Removing {len(siteIdsToRemoveSet)} sites, then adding {len(tuples)} sites to DB"
+    )
 
-    mycursor.executemany(
+    if len(tuples) == 0:
+        print("No sites to add! Exiting...")
+        exit(0)
+
+    print("Waiting 5 seconds...")
+    time.sleep(5)
+
+    csr = get_cursor()
+
+    siteIdsToRemoveTuples = [(id,) for id in siteIdsToRemoveSet]
+
+    # Remove all existing records
+    csr.executemany(
+        "DELETE FROM sites WHERE mast_id IN (%s)", tuple(siteIdsToRemoveTuples)
+    )
+
+    # Insert all new records
+    csr.executemany(
         """INSERT INTO sites (
         mast_id,
         station_name,
