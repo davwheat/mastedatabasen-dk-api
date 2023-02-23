@@ -17,7 +17,7 @@
     "json-api-error": "git+https://github.com/davwheat/JsonAPIErrors#build",
     "mysql2": "^2.3.3",
     "qs": "^6.11.0",
-    "sequelize": "^6.25.2",
+    "sequelize": "^6.28.2",
     "winston": "^3.8.2",
     "yayson": "^2.1.0"
   },
