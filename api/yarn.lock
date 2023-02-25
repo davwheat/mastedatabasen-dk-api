@@ -1470,7 +1470,7 @@ __metadata:
     mysql2: ^2.3.3
     prettier: ^2.7.1
     qs: ^6.11.0
-    sequelize: ^6.25.2
+    sequelize: ^6.29.0
     ts-node-dev: ^2.0.0
     typescript: ^4.8.4
     winston: ^3.8.2
@@ -1628,12 +1628,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"moment-timezone@npm:^0.5.34":
-  version: 0.5.35
-  resolution: "moment-timezone@npm:0.5.35"
+"moment-timezone@npm:^0.5.35":
+  version: 0.5.40
+  resolution: "moment-timezone@npm:0.5.40"
   dependencies:
     moment: ">= 2.9.0"
-  checksum: 0f3907282dc9ae3d405fefaccf486dc4222945ff479127fd269e6c4ddc25e526e7ca9e849d6bf941c871bd17e875b256bdb276137a55db9fce4177c792a003df
+  checksum: 6f6be5412b37fd937bb143efe74bf65b2c3f115fd967a6dc13b717a126ed6dd198bff6db6e179d69a089e20ac03ce7622c6b5598dd585005195554487a91b528
   languageName: node
   linkType: hard
 
@@ -1970,10 +1970,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"retry-as-promised@npm:^6.1.0":
-  version: 6.1.0
-  resolution: "retry-as-promised@npm:6.1.0"
-  checksum: cde3ad5c827d3f51b9161b9453dfd5eb8b8b6c22b6b405f7294eaa1939ef1966f8bd4c8a228ce2d66a24959d1dcc48b113c4c810ecdaddec2968b6d20576329d
+"retry-as-promised@npm:^7.0.3":
+  version: 7.0.4
+  resolution: "retry-as-promised@npm:7.0.4"
+  checksum: 2b0dcddb06649d42b1384ec1f933c7cb4461939c28004460b0c4be0c8ae16cabaed2411aa5d46e734a320f33f4a1d480078a19b97c743c754bd32e896b3f8ea2
   languageName: node
   linkType: hard
 
@@ -2080,9 +2080,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"sequelize@npm:^6.25.2":
-  version: 6.25.2
-  resolution: "sequelize@npm:6.25.2"
+"sequelize@npm:^6.29.0":
+  version: 6.29.0
+  resolution: "sequelize@npm:6.29.0"
   dependencies:
     "@types/debug": ^4.1.7
     "@types/validator": ^13.7.1
@@ -2091,9 +2091,9 @@ __metadata:
     inflection: ^1.13.2
     lodash: ^4.17.21
     moment: ^2.29.1
-    moment-timezone: ^0.5.34
+    moment-timezone: ^0.5.35
     pg-connection-string: ^2.5.0
-    retry-as-promised: ^6.1.0
+    retry-as-promised: ^7.0.3
     semver: ^7.3.5
     sequelize-pool: ^7.1.0
     toposort-class: ^1.0.1
@@ -2119,7 +2119,7 @@ __metadata:
       optional: true
     tedious:
       optional: true
-  checksum: 27c7d7c93b70a9566f730a6245fcc912dc381a87fcf735954e962ebc8443b8602a875820f967e875c75cc73638428b7d95b6c5916d0d82099f329d7546e5441f
+  checksum: 3b25ef91cdf828f987deca28d5b46a5771b225687485b2f34c7a0e85269952fb7bf26cf689d1e32c94908238d6968fbab4694350407f56820f879769339c62b6
   languageName: node
   linkType: hard
 
