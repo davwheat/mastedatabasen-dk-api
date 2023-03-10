@@ -43,6 +43,10 @@ def init_db():
     with open("mysql_root_pwd.txt", "r") as f:
         root_pwd = f.read()
 
+    print("Attempting to log into MySQL database...")
+    print(f"User: root")
+    print(f"Password: {root_pwd}")
+
     connection = mysql.connector.connect(
         host="localhost",
         user="root",
