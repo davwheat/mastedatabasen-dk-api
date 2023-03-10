@@ -13,7 +13,7 @@ export abstract class AbstractListModelController<
 > extends AbstractPresentController<M> {
   protected readonly shouldPaginate: boolean = false;
   protected readonly maxLimit: number = 20;
-  protected readonly paginator!: typeof this.shouldPaginate extends false ? never : ModelPaginator<M>;
+  protected readonly paginator!: ModelPaginator<M>;
 
   protected async data(): Promise<M[] | void> {
     const models = (await this.model.findAll()) as M[];
