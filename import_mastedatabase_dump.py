@@ -44,7 +44,7 @@ def init_db():
         root_pwd = f.read()
 
     connection = mysql.connector.connect(
-        host="127.0.0.1",
+        host="localhost",
         user="root",
         password=root_pwd,
         database="mastedatabasen_sites",

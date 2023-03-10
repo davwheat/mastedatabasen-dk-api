@@ -57,7 +57,7 @@ jobs:
 
       - name: Generate SQL dump
         run: |
-          mysqldump -u root -p"${MYSQL_PWD}" mastedatabasen_sites -h 127.0.0.1 > "./dumps/mastedatabasen_sites-$(date +"%Y-%m-%d").sql"
+          mysqldump -u root -p"${MYSQL_PWD}" mastedatabasen_sites -h localhost > "./dumps/mastedatabasen_sites-$(date +"%Y-%m-%d").sql"
 
       - name: Spin down API Docker containers
         run: |
