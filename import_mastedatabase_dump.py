@@ -38,19 +38,22 @@ def init_db():
     if connection != None:
         return
 
-    root_pwd = ""
+    user = "mastedatabasen_user"
+    password = ""
 
-    with open("mysql_root_pwd.txt", "r") as f:
-        root_pwd = f.read()
+    # with open("mysql_root_pwd.txt", "r") as f:
+    #     root_pwd = f.read()
+
+    password = "mastedatabasen"
 
     print("Attempting to log into MySQL database...")
-    print(f"User: root")
-    print(f"Password: {root_pwd}")
+    print(f"User: {user}")
+    print(f"Password: {password}")
 
     connection = mysql.connector.connect(
         host="localhost",
-        user="root",
-        password=root_pwd,
+        user=user,
+        password=password,
         database="mastedatabasen_sites",
         consume_results=True,
     )
