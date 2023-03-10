@@ -1,0 +1,59 @@
+# This workflow will install Python dependencies, run tests and lint with a single version of Python
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-python
+
+name: Deploy sites SQL dump to API server
+
+on:
+  push:
+    paths:
+      - "./dumps"
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  deploy:
+    name: Create SQL dump
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          ref: main
+
+      - name: Setup SSH access
+
+        env: # Or as an environment variable
+          PRIVATEKEY: ${{ secrets.SSH_PRIVATE_KEY }}
+        run: |
+          echo "${PRIVATEKEY}" > ~/.ssh/id_ed25519
+
+      - name: Deploy latest SQL dump to server
+        run: |
+          echo "cd ~/mastedatabasen-dk-api" >> ~/script.sh
+
+          # Reset local repository state
+          # This shouldn't affect the mysql root pwd file, or the .env file.
+          echo "git reset --hard" >> ~/script.sh
+
+          # Pull changes
+          echo "git pull" >> ~/script.sh
+
+          # Use latest dump as the DB init file
+          echo "NEWEST_DUMP=$(ls -t ./dumps/*.sql | head -1)" >> ~/script.sh
+          echo "cp $NEWEST_DUMP ./db/init.sql" >> ~/script.sh
+
+          # Spin down Docker containers and delete old DB volume
+          echo "docker compose down -v" >> ~/script.sh
+
+          # Spin up Docker containers again
+          echo "docker compose up -d" >> ~/script.sh
+
+          ssh -q -t -i ~/.ssh/id_ed25519 -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no root@main.hetzner.cloud.davw.network < ~/script.sh
+
+          rm ~/script.sh
