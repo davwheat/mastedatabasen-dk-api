@@ -9,7 +9,7 @@ services:
     restart: unless-stopped
     environment:
       - MYSQL_DATABASE=mastedatabasen_sites
-      - MYSQL_ROOT_HOST='172.18.0.1'
+      - MYSQL_ROOT_HOST='%'
       - MYSQL_ROOT_PASSWORD_FILE=/run/secrets/mysql_root_pwd
       - MYSQL_USER=mastedatabasen_user
       - MYSQL_PASSWORD=mastedatabasen
