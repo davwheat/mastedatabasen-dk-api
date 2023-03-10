@@ -54,13 +54,13 @@ jobs:
 
       - name: Import sites to database
         run: |
-          mysql --verbose -uroot -p"${MYSQL_PWD}" -e '\q'
+          mysql --verbose -uroot -p"${MYSQL_PWD}" -h 127.0.0.1 -e '\q'
           wget https://raw.githubusercontent.com/davwheat/mastedatabasen-dk-scraper/main/sites_current_with_operator.json
           python ./import_mastedatabase_dump.py
 
       - name: Generate SQL dump
         run: |
-          mysqldump -u root -p"${MYSQL_PWD}" mastedatabasen_sites -h localhost > "./dumps/mastedatabasen_sites-$(date +"%Y-%m-%d").sql"
+          mysqldump -u root -p"${MYSQL_PWD}" mastedatabasen_sites -h 127.0.0.1 > "./dumps/mastedatabasen_sites-$(date +"%Y-%m-%d").sql"
 
       - name: Spin down API Docker containers
         run: |
