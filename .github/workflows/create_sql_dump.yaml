@@ -16,8 +16,7 @@ jobs:
   build:
     name: Create SQL dump
 
-    # Self-hosted runners get longer job time limits
-    runs-on: [self-hosted, Linux]
+    runs-on: ubuntu-latest
 
     permissions:
       # Give the default GITHUB_TOKEN write permission to commit and push the
@@ -75,4 +74,4 @@ jobs:
         with:
           commit_message: Add updated sites SQL dump
           branch: main
-          file_pattern: 'dumps/*.sql'
+          file_pattern: "dumps/*.sql"
