@@ -46,14 +46,14 @@ jobs:
           echo "git pull" >> ~/script.sh
 
           # Use latest dump as the DB init file
-          echo "NEWEST_DUMP=$(ls -t ./dumps/*.sql | head -1)" >> ~/script.sh
-          echo "cp $NEWEST_DUMP ./db/init.sql" >> ~/script.sh
+          echo "newestDump=$(ls -t ./dumps/*.sql | head -1)" >> ~/script.sh
+          echo "cp $newestDump ./db/init.sql" >> ~/script.sh
 
           # Spin down Docker containers and delete old DB volume
           echo "docker compose down -v" >> ~/script.sh
 
           # Spin up Docker containers again
-          echo "docker compose up -d" >> ~/script.sh
+          echo "./full-container-restart.sh" >> ~/script.sh
 
           ssh -q -t -i ~/.ssh/id_ed25519 -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no mastedatabasen@main.hetzner.cloud.davw.network < ~/script.sh
 
