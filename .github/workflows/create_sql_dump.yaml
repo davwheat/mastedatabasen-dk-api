@@ -50,9 +50,11 @@ jobs:
           cp api.env.example api.env
           sed -i -e 's/- "3306"/- "3306:3306"/' ./docker-compose.yml
           docker compose up -d
+          docker ps
 
       - name: Import sites to database
         run: |
+          mysql --verbose -uroot -p"${MYSQL_PWD}" -e '\q'
           wget https://raw.githubusercontent.com/davwheat/mastedatabasen-dk-scraper/main/sites_current_with_operator.json
           python ./import_mastedatabase_dump.py
 
