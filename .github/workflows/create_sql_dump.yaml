@@ -46,6 +46,7 @@ jobs:
       - name: Spin up API Docker containers
         run: |
           echo $MYSQL_PWD > mysql_root_pwd.txt
+          cat mysql_root_pwd.txt
           cp api.env.example api.env
           sed -i -e 's/- "3306"/- "3306:3306"/' ./docker-compose.yml
           docker compose up -d
