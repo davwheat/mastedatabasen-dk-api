@@ -27,10 +27,10 @@ jobs:
           ref: main
 
       - name: Setup SSH access
-
-        env: # Or as an environment variable
+        env:
           PRIVATEKEY: ${{ secrets.SSH_PRIVATE_KEY }}
         run: |
+          mkdir -p ~/.ssh
           echo "${PRIVATEKEY}" > ~/.ssh/id_ed25519
 
       - name: Deploy latest SQL dump to server
