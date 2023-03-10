@@ -16,7 +16,7 @@ permissions:
 
 jobs:
   deploy:
-    name: Create SQL dump
+    name: Deploy SQL dump
 
     runs-on: ubuntu-latest
 
@@ -54,6 +54,6 @@ jobs:
           # Spin up Docker containers again
           echo "docker compose up -d" >> ~/script.sh
 
-          ssh -q -t -i ~/.ssh/id_ed25519 -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no root@main.hetzner.cloud.davw.network < ~/script.sh
+          ssh -q -t -i ~/.ssh/id_ed25519 -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no mastedatabasen@main.hetzner.cloud.davw.network < ~/script.sh
 
           rm ~/script.sh
