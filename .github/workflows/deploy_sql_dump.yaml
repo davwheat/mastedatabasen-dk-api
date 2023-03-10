@@ -46,8 +46,7 @@ jobs:
           echo "git pull" >> ~/script.sh
 
           # Use latest dump as the DB init file
-          echo "newestDump=$(ls -t ./dumps/*.sql | head -1)" >> ~/script.sh
-          echo "cp $newestDump ./db/init.sql" >> ~/script.sh
+          echo "cp $(ls -t ./dumps/*.sql | head -1) ./db/init.sql" >> ~/script.sh
 
           # Spin down Docker containers and delete old DB volume
           echo "docker compose down -v" >> ~/script.sh
