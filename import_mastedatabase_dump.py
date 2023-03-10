@@ -11,14 +11,23 @@ technology_id_map = {}
 service_id_map = {}
 frequency_band_id_map = {}
 
+unique_operators = set()
+unique_technologies = set()
+unique_service_types = set()
+unique_frequency_bands = set()
+
 
 def main():
     global connection
+
+    fetch_unique_values()
 
     fetch_operators()
     fetch_technologies()
     fetch_service_types()
     fetch_frequency_bands()
+
+    connection.commit()
 
     import_sites()
 
@@ -55,6 +64,18 @@ def SELECT(query, useDict=True):
     return mycursor.fetchall()
 
 
+def fetch_unique_values():
+    with open("sites_current_with_operator.json", "r") as f:
+        sites = json.loads(f.read())
+
+    for s in sites:
+        unique_operators.add(s["operator"])
+        unique_technologies.add(s["technology"])
+        unique_service_types.add(s["serviceType"])
+        if s["frequencyBand"] != None:
+            unique_frequency_bands.add(s["frequencyBand"])
+
+
 def fetch_operators():
     global operators_id_map
 
@@ -62,6 +83,16 @@ def fetch_operators():
 
     for operator in operators:
         operators_id_map[operator["operator_name"]] = operator["id"]
+
+    # Add missing entries
+    for operator in sorted(list(unique_operators)):
+        if operator not in operators_id_map:
+            print(f"Adding new operator: {operator}")
+            csr = get_cursor()
+            csr.execute(
+                "INSERT INTO operators (operator_name) VALUES (%s)", (operator,)
+            )
+            operators_id_map[operator] = csr.lastrowid
 
 
 def fetch_technologies():
@@ -72,6 +103,16 @@ def fetch_technologies():
     for technology in technologies:
         technology_id_map[technology["technology_name"]] = technology["id"]
 
+    # Add missing entries
+    for technology in sorted(list(unique_technologies)):
+        if technology not in technology_id_map:
+            print(f"Adding new technology: {technology}")
+            csr = get_cursor()
+            csr.execute(
+                "INSERT INTO technologies (technology_name) VALUES (%s)", (technology,)
+            )
+            technology_id_map[technology] = csr.lastrowid
+
 
 def fetch_service_types():
     global service_id_map
@@ -81,6 +122,16 @@ def fetch_service_types():
     for service in services:
         service_id_map[service["service_name"]] = service["id"]
 
+    # Add missing entries
+    for service in sorted(list(unique_service_types)):
+        if service not in service_id_map:
+            print(f"Adding new service: {service}")
+            csr = get_cursor()
+            csr.execute(
+                "INSERT INTO service_types (service_name) VALUES (%s)", (service,)
+            )
+            service_id_map[service] = csr.lastrowid
+
 
 def fetch_frequency_bands():
     global frequency_band_id_map
@@ -89,6 +140,17 @@ def fetch_frequency_bands():
 
     for frequency_band in frequency_bands:
         frequency_band_id_map[frequency_band["frequency_band"]] = frequency_band["id"]
+
+    # Add missing entries
+    for frequency_band in sorted(list(unique_frequency_bands)):
+        if frequency_band not in frequency_band_id_map:
+            print(f"Adding new frequency band: {frequency_band}")
+            csr = get_cursor()
+            csr.execute(
+                "INSERT INTO frequency_bands (frequency_band) VALUES (%s)",
+                (frequency_band,),
+            )
+            frequency_band_id_map[frequency_band] = csr.lastrowid
 
 
 def get_all_site_mast_ids():
@@ -159,6 +221,12 @@ def import_sites():
 
     print("Waiting 5 seconds...")
     time.sleep(5)
+
+    print("** Beginning import... **")
+    print(
+        "This will insert the full set of records in one go, with no progress indication."
+    )
+    print("If the script hangs, it is likely still adding records.")
 
     csr = get_cursor()
 
