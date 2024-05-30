@@ -15,7 +15,7 @@
     "express": "^4.18.2",
     "helmet": "^6.0.1",
     "json-api-error": "git+https://github.com/davwheat/JsonAPIErrors#build",
-    "mysql2": "^2.3.3",
+    "mysql2": "^3.9.8",
     "qs": "^6.11.1",
     "sequelize": "^6.29.2",
     "winston": "^3.8.2",
