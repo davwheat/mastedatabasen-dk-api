@@ -3,7 +3,7 @@ name: Deploy sites SQL dump to API server
 on:
   push:
     paths:
-      - "./dumps"
+      - "./dumps/**"
     branches:
       - main
   workflow_dispatch:
